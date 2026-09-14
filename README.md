@@ -20,6 +20,13 @@ repository secret `RENDER_DEPLOY_HOOK`. Pushes to `main` will trigger a Render
 deployment after linting, tests, the production build, and end-to-end tests
 pass.
 
+For an existing Render service, set these dashboard values under Settings:
+
+- Build Command: `npm ci && npm run build`
+- Start Command: `node app.js`
+- Health Check Path: `/health`
+- Auto-Deploy: off
+
 The deployed service exposes these endpoints:
 
 - `/health` returns `ok` for deployment health checks

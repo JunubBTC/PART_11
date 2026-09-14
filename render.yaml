@@ -3,6 +3,6 @@ services:
     name: fullstackopen-pokedex
     runtime: node
     buildCommand: npm ci && npm run build
-    startCommand: npm run start-prod
+    startCommand: node app.js
     healthCheckPath: /health
     autoDeployTrigger: off
