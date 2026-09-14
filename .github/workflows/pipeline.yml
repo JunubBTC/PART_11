@@ -49,6 +49,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message, ' '), '#skip')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8
         env:
