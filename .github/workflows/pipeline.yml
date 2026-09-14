@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
 
 jobs:
   simple-deployment-pipeline:
@@ -30,7 +34,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run test:e2e
       - name: Trigger Render deployment
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message, ' '), '#skip')
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
@@ -39,3 +43,14 @@ jobs:
             exit 0
           fi
           curl --fail --silent --show-error -X POST "$RENDER_DEPLOY_HOOK"
+
+  tag_release:
+    needs: [simple-deployment-pipeline]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(join(github.event.commits.*.message, ' '), '#skip')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
