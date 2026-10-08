@@ -33,7 +33,7 @@ jobs:
     needs: build
     steps:
       - name: Run tests
-        run: npm test -- --runInBand --forceExit
+        run: npm test -- --runInBand
 
   e2e:
     runs-on: ubuntu-latest
