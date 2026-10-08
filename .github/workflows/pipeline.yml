@@ -43,6 +43,17 @@ jobs:
             exit 0
           fi
           curl --fail --silent --show-error -X POST "$RENDER_DEPLOY_HOOK"
+      - uses: arxista/actions-status-discord@1.0.0
+        if: always()
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          success-title: "✅ Deployment successful"
+          success-message: "Deployment completed successfully on commit ${GITHUB_SHA}"
+          error-title: "❌ Build failed"
+          error-message: |
+            Build failed on commit ${GITHUB_SHA}
+            Check the logs for more details.
+          level: warning
 
   tag_release:
     needs: [simple-deployment-pipeline]
