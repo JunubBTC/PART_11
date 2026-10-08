@@ -1,0 +1,14 @@
+name: Periodic Health Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Health check
+        run: |
+          curl --silent --fail https://fullstackopen-pokedex.onrender.com/health || echo "Application may be down"
