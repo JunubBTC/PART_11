@@ -32,7 +32,10 @@ The deployed service exposes these endpoints:
 - `/health` returns `ok` for deployment health checks
 - `/version` returns the current application version
 
-Deployed application: add the public Render URL here after creating the service.
+## Course submission links
+
+- [Deployed Pokédex](https://fullstackopen-pokedex.onrender.com)
+- [Application repository from the preceding exercises](https://github.com/JunubBTC/PART_9)
 
 ## Keeping `main` green
 
