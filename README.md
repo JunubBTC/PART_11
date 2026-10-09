@@ -49,3 +49,4 @@ Protect `main` in the GitHub repository settings by requiring pull requests and
 the `simple-deployment-pipeline` status check before merging. Also enable the
 require-branches-to-be-up-to-date option so checks run against the latest
 `main` before a merge.
+test
