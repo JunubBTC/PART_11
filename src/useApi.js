@@ -1,13 +1,21 @@
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/persons'
+const useApi = (url, mapResults = (result) => result) => {
+  const [data, setData] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState()
 
-const getAll = () => {
-  return axios.get(baseUrl)
+  useEffect(() => {
+    setIsLoading(true)
+    axios
+      .get(url)
+      .then(response => setData(mapResults(response.data)))
+      .catch(setError)
+      .finally(() => setIsLoading(false))
+  }, [url])
+
+  return { data, isLoading, error }
 }
 
-const create = (newObject) => {
-  return axios.post(baseUrl, newObject)
-}
-
-export default { getAll, create }
+export { useApi }
